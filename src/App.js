@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import "./components/HomeComponent.js";
 import HomeComponent from "./components/HomeComponent.js";

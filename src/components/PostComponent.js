@@ -1,10 +1,11 @@
-function PostComponent() {
-    return (
-      <>
-        <h1>Post Component</h1>
-      </>
-    );
-  }
-  
-  export default PostComponent;
-  
+import { Typography, Box } from "@mui/material";
+
+const PostComponent = ({ post }) => {
+  return (
+    <>
+      
+    </>
+  );
+};
+
+export default PostComponent;
