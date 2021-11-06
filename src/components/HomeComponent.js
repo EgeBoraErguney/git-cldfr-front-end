@@ -27,7 +27,6 @@ function HomeComponent() {
     setModalPost({});
   }
   useEffect(() => {
-    /*
     let loaded = false;
     fetch("https://back-end.egeboraerguney.workers.dev/posts/")
       .then((resp) => resp.json())
@@ -38,45 +37,6 @@ function HomeComponent() {
       })
       .catch((err) => console.log(err));
     return () => (loaded = true);
-    */
-    setPosts([
-      {
-        id: "19cd186a4d9030ad18b97c2e6d1ebbeb",
-        title: "My first Post",
-        username: "user1",
-        content: "Hey all!",
-        upvotes: 6,
-        downvotes: 4,
-        comments: [
-          { username: "user2", content: "hey!" },
-          { username: "user3", content: "Hi !" },
-        ],
-      },
-      {
-        id: "49bcee16617fde19f8e0ee5acaa0d63d",
-        title: "My second Post",
-        username: "user3",
-        content: "Heyyo all!",
-        upvotes: 10,
-        downvotes: 2,
-        comments: [
-          { username: "user4", content: "heyyo!" },
-          { username: "user53", content: "Helloo !" },
-        ],
-      },
-      {
-        id: "asdfadfadfakfamrvmaerb",
-        title: "My third Post",
-        username: "user345",
-        content: "WoooW!",
-        upvotes: 4,
-        downvotes: 8,
-        comments: [
-          { username: "user53", content: "heyaaa!" },
-          { username: "user32", content: "Hi aasdasd!" },
-        ],
-      },
-    ]);
   }, []);
 
   function HandleClickVotes(postId, voteType) {
@@ -110,7 +70,7 @@ function HomeComponent() {
           sx={{
             mt: "32px !important",
             margin: "auto",
-            width: "40%",
+            width: "60%",
             padding: "16px",
           }}
           elevation={3}

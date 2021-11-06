@@ -1,6 +1,9 @@
-import { Typography, Box,Paper } from "@mui/material";
+import { Typography, Box, Paper, TextField, Button } from "@mui/material";
+import { useState } from "react";
 
 const PostComponent = ({ modalPost }) => {
+  const [formData, setFormData] = useState({});
+
   return (
     <>
       <Box sx={style}>
@@ -9,6 +12,29 @@ const PostComponent = ({ modalPost }) => {
         </Typography>
         <Typography sx={{ mt: 2 }}>{modalPost.content}</Typography>
         <Typography sx={{ mt: 2 }}>Comments: </Typography>
+        <Typography
+          sx={{ mt: 2 }}
+          onChange={(event) => {
+            setFormData({ ...formData, username: event.target.value });
+          }}
+        >
+          {" "}
+          <TextField label="username" variant="outlined" />
+        </Typography>
+        <Typography sx={{ mt: 2 }}>
+          {" "}
+          <TextField
+            onChange={(event) => {
+              setFormData({ ...formData, content: event.target.value });
+            }}
+            label="content"
+            variant="outlined"
+          />
+        </Typography>
+        <Typography sx={{ mt: 2 }}>
+          {" "}
+          <Button variant="contained">Add</Button>
+        </Typography>
         {modalPost.comments &&
           modalPost.comments.map((comment) => (
             <Paper
@@ -21,7 +47,7 @@ const PostComponent = ({ modalPost }) => {
               }}
               elevation={3}
             >
-              <Typography variant="h4">{comment.username}</Typography>
+              <Typography variant="h5">{comment.username}</Typography>
               <Typography variant="h6">{comment.content}</Typography>
             </Paper>
           ))}
