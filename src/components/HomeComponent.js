@@ -13,16 +13,18 @@ import { ThumbUp, ThumbDown } from "@mui/icons-material";
 
 function HomeComponent() {
   const [posts, setPosts] = useState([]);
-  const [postModalOpen, setPostModalOpen] = useState(false);
+  const [postModalOpen, setPostModalOpen] = useState(true);
   const [modalPost, setModalPost] = useState({});
   const [skipFirstRender, setSkipFirstRender] = useState(true);
 
   function handlePostModalOpen(post) {
-    console.log(post);
-    setPostModalOpen(true);
+    setModalPost(post);
   }
+  useEffect(() => {
+    setPostModalOpen(!postModalOpen);
+  }, [modalPost]);
   function handlePostModalClose() {
-    setPostModalOpen(false);
+    setModalPost({});
   }
   useEffect(() => {
     /*
@@ -161,26 +163,10 @@ function HomeComponent() {
         </Paper>
       ))}
       <Modal open={postModalOpen} onClose={handlePostModalClose}>
-        <Box sx={style}>
-          <Typography variant="h6" component="h2">
-            {modalPost.title}
-          </Typography>
-          <Typography sx={{ mt: 2 }}>{modalPost.content}</Typography>
-        </Box>
+        <PostComponent modalPost={modalPost}/>
       </Modal>
     </>
   );
 }
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 400,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
 
 export default HomeComponent;
