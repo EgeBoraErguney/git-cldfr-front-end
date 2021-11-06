@@ -1,22 +1,22 @@
 import { Typography, Box, Paper, TextField, Button } from "@mui/material";
 import { useState } from "react";
 import axios from "axios";
-const PostComponent = ({ modalPost }) => {
+
+const CreatePostComponent = () => {
   const [formData, setFormData] = useState({});
   function postData() {
-    if (modalPost.comments) {
-      modalPost.comments = [...modalPost.comments, formData];
-    } else {
-      modalPost.comments = [formData];
-    }
-    const body = modalPost;
+    var newFormData = { ...formData, upvotes: 0, downvotes: 0 };
     const headers = {
       contentType: "application/json",
     };
     axios
-      .post("https://back-end.egeboraerguney.workers.dev/posts/", body, {
-        headers,
-      })
+      .post(
+        "https://back-end.egeboraerguney.workers.dev/posts/",
+        newFormData,
+        {
+          headers,
+        }
+      )
       .then((response) => {
         window.location.reload(false);
       })
@@ -28,12 +28,18 @@ const PostComponent = ({ modalPost }) => {
     <>
       <Box sx={style}>
         <Typography variant="h6" component="h2">
-          {modalPost.title}
+          Create new post
         </Typography>
-        <Typography sx={{ mt: 2 }}>{modalPost.content}</Typography>
-        <Typography sx={{ mt: 2 }}>Comments: </Typography>
         <Typography sx={{ mt: 2 }}>
-          {" "}
+          <TextField
+            onChange={(event) => {
+              setFormData({ ...formData, title: event.target.value });
+            }}
+            label="title"
+            variant="outlined"
+          />
+        </Typography>
+        <Typography sx={{ mt: 2 }}>
           <TextField
             onChange={(event) => {
               setFormData({ ...formData, username: event.target.value });
@@ -43,7 +49,6 @@ const PostComponent = ({ modalPost }) => {
           />
         </Typography>
         <Typography sx={{ mt: 2 }}>
-          {" "}
           <TextField
             onChange={(event) => {
               setFormData({ ...formData, content: event.target.value });
@@ -53,27 +58,10 @@ const PostComponent = ({ modalPost }) => {
           />
         </Typography>
         <Typography sx={{ mt: 2 }}>
-          {" "}
           <Button onClick={() => postData()} variant="contained">
-            Add
+            Submit
           </Button>
         </Typography>
-        {modalPost.comments &&
-          modalPost.comments.map((comment) => (
-            <Paper
-              key={comment.username}
-              sx={{
-                mt: "16px !important",
-                margin: "auto",
-                width: "90%",
-                padding: "8px",
-              }}
-              elevation={3}
-            >
-              <Typography variant="h5">{comment.username}</Typography>
-              <Typography variant="h6">{comment.content}</Typography>
-            </Paper>
-          ))}
       </Box>
     </>
   );
@@ -91,4 +79,4 @@ const style = {
   p: 4,
 };
 
-export default PostComponent;
+export default CreatePostComponent;
