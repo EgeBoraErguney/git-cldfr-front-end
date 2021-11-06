@@ -1,9 +1,28 @@
 import { Typography, Box, Paper, TextField, Button } from "@mui/material";
 import { useState } from "react";
-
+import axios from "axios";
 const PostComponent = ({ modalPost }) => {
   const [formData, setFormData] = useState({});
-
+  function postData() {
+    if(modalPost.comments){
+      modalPost.comments = [...modalPost.comments, formData];
+    }else{
+      modalPost.comments = [formData];
+    }
+    const body = modalPost;
+    const headers = {
+      contentType: "application/json",
+    };
+    axios
+      .post("https://back-end.egeboraerguney.workers.dev/posts/", body, {
+        headers,
+      })
+      .then((response) => {
+        window.location.reload(false); 
+      }).catch((err)=> {
+        console.log(err);
+      });
+  }
   return (
     <>
       <Box sx={style}>
@@ -33,7 +52,9 @@ const PostComponent = ({ modalPost }) => {
         </Typography>
         <Typography sx={{ mt: 2 }}>
           {" "}
-          <Button variant="contained">Add</Button>
+          <Button onClick={() => postData()} variant="contained">
+            Add
+          </Button>
         </Typography>
         {modalPost.comments &&
           modalPost.comments.map((comment) => (

@@ -10,6 +10,7 @@ import {
 import logo from "../logo.svg";
 import PostComponent from "./PostComponent";
 import { ThumbUp, ThumbDown } from "@mui/icons-material";
+import axios from "axios";
 
 function HomeComponent() {
   const [posts, setPosts] = useState([]);
@@ -43,6 +44,17 @@ function HomeComponent() {
     var postToChange = posts.find((post) => post.id === postId);
     if (voteType === "up") postToChange.upvotes += 1;
     else if (voteType === "down") postToChange.downvotes += 1;
+    const headers = {
+      contentType: "application/json",
+    };
+    axios
+      .post("https://back-end.egeboraerguney.workers.dev/posts/", postToChange, {
+        headers,
+      })
+      .then((response) => {})
+      .catch((err) => {
+        console.log(err);
+      });
     setPosts([...posts]);
   }
   return (
@@ -54,7 +66,7 @@ function HomeComponent() {
         }}
         variant="h6"
       >
-        Social Media Application
+        Social Media Application by Ege Bora Ergüney
       </Typography>
       <Button
         sx={{
@@ -118,12 +130,13 @@ function HomeComponent() {
             }}
             onClick={() => handlePostModalOpen(post)}
           >
-            {post.comments.length} comments
+            {post.comments && <span>{post.comments.length} comments</span>}
+            {!post.comments && <span>Add a comment</span>}
           </Typography>
         </Paper>
       ))}
       <Modal open={postModalOpen} onClose={handlePostModalClose}>
-        <PostComponent modalPost={modalPost}/>
+        <PostComponent modalPost={modalPost} />
       </Modal>
     </>
   );
